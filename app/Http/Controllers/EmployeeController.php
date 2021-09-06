@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
+
+    function __construct() {
+
+        $this->middleware('role.checker')->except('index');
+        
+    }
     /**
      * Display a listing of the resource.
      *

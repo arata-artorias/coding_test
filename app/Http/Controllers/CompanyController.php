@@ -7,6 +7,12 @@ use App\Company;
 
 class CompanyController extends Controller
 {
+
+    function __construct() {
+
+        $this->middleware('role.checker')->except('index');
+        
+    }
     /**
      * Display a listing of the resource.
      *
