@@ -14,7 +14,7 @@ class EmployeeController extends Controller
     function __construct() {
 
         $this->middleware('role.checker')->except('index');
-        
+
     }
     /**
      * Display a listing of the resource.
@@ -39,6 +39,14 @@ class EmployeeController extends Controller
         //     $query->where('name', 'like', '%'.$search.'%');
         // }])
         ->paginate(10);
+
+        $handle = fopen('export.csv', 'w');
+
+        foreach ($employees as $row) {
+	        fputcsv($handle, $row->toArray(), ';');
+        }
+
+        fclose($handle);
 
         return view('employee.index', compact('employees'));
     }
