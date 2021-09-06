@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Company;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -58,6 +60,15 @@ class EmployeeController extends Controller
         $this->validation($request);
 
         $employee = Employee::create($request->all());
+
+        $user = new User();
+        $user->password = Hash::make('12345678');
+        $user->email = $employee->email;
+        $user->name = $employee->first_name.' '.$employee->last_name;
+        $user->role = 'employee';
+        $user->save();
+
+        // To link Employee and User tables
    
         return redirect('/employees')->with('success', 'Employee '.$employee->first_name.' '.$employee->last_name.' is successfully added');
     }
