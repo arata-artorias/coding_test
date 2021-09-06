@@ -8,6 +8,11 @@
                     {{ session()->get('success') }}
                 </div><br />
             @endif
+
+            <div class="row justify-content-end">
+                <a href="{{ route('companies.create') }}" class="btn btn-primary">Add</a>
+            </div>
+
             <table class="table table-striped">
                 <thead>
                     <tr>

@@ -43,12 +43,9 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
-        ]);
-        $company = Company::create($validatedData);
+        $this->validation($request);
+
+        $company = Company::create($request->all());
    
         return redirect('/companies')->with('success', 'Company '.$company->name.' is successfully added');
     }
@@ -86,9 +83,9 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $this->validation($request);
+        $this->validation($request);
 
-        Company::whereId($id)->update($validatedData);
+        Company::whereId($id)->update($request->except('_token', '_method'));
 
         return redirect('/companies')->with('success', 'Company '.$request->name.' is successfully updated');
     }
@@ -117,8 +114,8 @@ class CompanyController extends Controller
     {
         return $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
+            'email' => 'email',
+            // 'address' => 'required',
         ]);
     }
 }

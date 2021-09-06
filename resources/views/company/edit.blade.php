@@ -25,15 +25,15 @@
                     <div class="form-group">
                         @csrf
                         @method('PATCH')
-                        <label for="country_name">Country Name:</label>
+                        <label for="country_name">Company Name:</label>
                         <input type="text" class="form-control" name="name" value="{{ $company->name }}" />
                     </div>
                     <div class="form-group">
-                        <label for="symptoms">Symptoms :</label>
+                        <label for="symptoms">Email :</label>
                         <input type="text" class="form-control" name="email" value="{{ $company->email }}" />
                     </div>
                     <div class="form-group">
-                        <label for="cases">Cases :</label>
+                        <label for="cases">Address :</label>
                         <input type="text" class="form-control" name="address" value="{{ $company->address }}" />
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
