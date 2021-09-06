@@ -40,7 +40,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($employees as $employee)
+                    @forelse ($employees as $employee)
                         <tr>
                             <td>{{ $employee->id }}</td>
                             <td>{{ $employee->first_name }}</td>
@@ -61,9 +61,14 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td>no records</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+            {{ $employees->links() }}
             <div>
                 <div>
                 @endsection

@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($companies as $company)
+                    @forelse ($companies as $company)
                         <tr>
                             <td>{{ $company->id }}</td>
                             <td>{{ $company->name }}</td>
@@ -34,9 +34,16 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td>no records</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+
+            {{ $companies->links() }}
+
             <div>
                 <div>
                 @endsection

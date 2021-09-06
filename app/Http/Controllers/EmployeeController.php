@@ -17,19 +17,20 @@ class EmployeeController extends Controller
     {
         $search = $request->search;
         if ($search == '') {
-            $employees = Employee::all();
-        } else {
-            $employees = Employee::whereHas('company', function ($query) use ($search){
-            $query->where('name', 'like', '%'.$search.'%');
-            })
-            ->orWhere->ofDepartmentSearch($search)
-            ->orWhere->ofStaffIdSearch($search)
-            ->orWhere->ofAddressSearch($search)
-            // ->with(['company' => function($query) use ($search){
-            //     $query->where('name', 'like', '%'.$search.'%');
-            // }])
-            ->get();
+            $employees = Employee::paginate(10);
+            return view('employee.index', compact('employees'));
         }
+
+        $employees = Employee::whereHas('company', function ($query) use ($search){
+            $query->where('name', 'like', '%'.$search.'%');
+        })
+        ->orWhere->ofDepartmentSearch($search)
+        ->orWhere->ofStaffIdSearch($search)
+        ->orWhere->ofAddressSearch($search)
+        // ->with(['company' => function($query) use ($search){
+        //     $query->where('name', 'like', '%'.$search.'%');
+        // }])
+        ->paginate(10);
 
         return view('employee.index', compact('employees'));
     }
@@ -55,8 +56,6 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $this->validation($request);
-
-        // dd($request->all());
 
         $employee = Employee::create($request->all());
    
